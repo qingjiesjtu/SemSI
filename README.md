@@ -1,6 +1,6 @@
 # Benchmarking Semantic Sensitive Information in LLMs Outputs
 
-This is the project repository of our anonymous submission to EMNLP 2024. The public available leaderboard is here.
+This is the project repository of our anonymous submission to EMNLP 2024. The public available leaderboard, SemSI-Board, is [here](https://anonymous-submission-1024.github.io/llms-sementic-information.github.io/).
 
 ## Abstract
 Large language models (LLMs) have become a main source to output sensitive information which is harmful in various domains. 
