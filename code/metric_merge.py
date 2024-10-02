@@ -22,9 +22,10 @@ def evaluate(datafilename,resume=True,refined=True):
     filename=datafilename[:-6]+"_label.jsonl"
     with open('IDs1000.txt', 'r') as file:
         IDs1000 = [int(line.strip()) for line in file]
-    privacy_prompt = get_prompt('promptPrivacy.txt')
-    harmfulness_prompt = get_prompt('promptHarmful.txt')
-    misinformation_prompt = get_prompt('promptMisinformation.txt')
+    # We will release our prompts once our paper is accepted
+    S_prompt = ''
+    R_prompt = ''
+    I_prompt = ''
     dataset = get_dataset(datafilename)
     IDsDone=[]
     if resume and os.path.exists(filename):
@@ -33,15 +34,15 @@ def evaluate(datafilename,resume=True,refined=True):
                 IDsDone.append(json.loads(line)["ID"])
     for data in tqdm(dataset):
         if data["ID"] not in IDs1000 or data["ID"] in IDsDone: continue
-        # evaluate privacy
+        # evaluate Sensitive identity attributes
         attempts = 0
         done = False
         while attempts < 1: # Enough to handle json format errors; necessary when temperature>0
             completion = client.chat.completions.create(
                 temperature=0,
-                model="gpt-4",
+                model="gpt-4o",
                 messages=[
-                    {"role": "user", "content": privacy_prompt + data['answer']}
+                    {"role": "user", "content": S_prompt + data['answer']}
                 ]
             )
             response = completion.choices[0].message.content
@@ -50,10 +51,10 @@ def evaluate(datafilename,resume=True,refined=True):
 
             try:
                 parsed_dict = json.loads(response)
-                data['ifPrivacy'] = parsed_dict['ifPrivacy']
-                if parsed_dict['ifPrivacy'] == 'yes':
-                    data['privacy'] = parsed_dict['privacy']
-                    data['scorePrivacy'] = parsed_dict['scorePrivacy']
+                data['ifS'] = parsed_dict['ifS']
+                if parsed_dict['ifS'] == 'yes':
+                    data['S'] = parsed_dict['S']
+                    data['scoreS'] = parsed_dict['scoreS']
                 done = True
                 print('valid')
             except json.JSONDecodeError as e:
@@ -67,15 +68,15 @@ def evaluate(datafilename,resume=True,refined=True):
             if done:
                 break
 
-        # evaluate harmfulness
+        # evaluate Reputation-harmful contents
         attempts = 0
         done = False
         while attempts < 1:
             completion = client.chat.completions.create(
                 temperature=0,
-                model="gpt-4",
+                model="gpt-4o",
                 messages=[
-                    {"role": "user", "content": harmfulness_prompt + data['answer']}
+                    {"role": "user", "content": R_prompt + data['answer']}
                 ]
             )
             response = completion.choices[0].message.content
@@ -84,10 +85,10 @@ def evaluate(datafilename,resume=True,refined=True):
 
             try:
                 parsed_dict = json.loads(response)
-                data['ifHarmful'] = parsed_dict['ifHarmful']
-                if parsed_dict['ifHarmful'] == 'yes':
-                    data['harmful'] = parsed_dict['harmful']
-                    data['scoreHarmful'] = parsed_dict['scoreHarmful']
+                data['ifR'] = parsed_dict['ifR']
+                if parsed_dict['ifR'] == 'yes':
+                    data['R'] = parsed_dict['R']
+                    data['scoreR'] = parsed_dict['scoreR']
                 done = True
                 print('valid')
             except json.JSONDecodeError as e:
@@ -101,15 +102,15 @@ def evaluate(datafilename,resume=True,refined=True):
             if done:
                 break
         
-        # evaluate misinformation
+        # evaluate Incorrect hazardous information
         attempts = 0
         done = False
         while attempts < 1:
             completion = client.chat.completions.create(
                 temperature=0,
-                model="gpt-4",
+                model="gpt-4o",
                 messages=[
-                    {"role": "user", "content": misinformation_prompt + data['answer']}
+                    {"role": "user", "content": I_prompt + data['answer']}
                 ]
             )
             response = completion.choices[0].message.content
@@ -118,10 +119,10 @@ def evaluate(datafilename,resume=True,refined=True):
 
             try:
                 parsed_dict = json.loads(response)
-                data['ifMisinformation'] = parsed_dict['ifMisinformation']
-                if parsed_dict['ifMisinformation'] == 'yes':
-                    data['misinformation'] = parsed_dict['misinformation']
-                    data['scoreMisinformation'] = parsed_dict['scoreMisinformation']
+                data['ifI'] = parsed_dict['ifI']
+                if parsed_dict['ifI'] == 'yes':
+                    data['I'] = parsed_dict['I']
+                    data['scoreI'] = parsed_dict['scoreI']
                 done = True
                 print('valid')
             except json.JSONDecodeError as e:

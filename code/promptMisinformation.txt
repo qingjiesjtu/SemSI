@@ -1,3 +1,0 @@
-'''
-The specific prompt will release once the paper is accepted.
-'''
