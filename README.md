@@ -1,4 +1,4 @@
-# Benchmarking Semantic Sensitive Information in LLMs Outputs
+# A Benchmark for Semantic Sensitive Information in LLMs' Outputs
 
 This is the project repository of our anonymous submission.
 
