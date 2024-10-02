@@ -28,6 +28,8 @@ We have evaluated 25 popular LLMs. We currently release the dataset for GPT-4o a
 ## Benchmark for SemSI, SemSI-Bench
 To evaluate SemSI behavior of an LLM, we first prompt it with prompts in SemSI-Set (in ```./code/genLLManswer.py```), and label each answer with the nine fields related to SemSI. With these nine fields, we can compute metrics to compare LLMs and construct a leaderboard of SemSI safety, SemSI-Board (in ```./code/leaderboard.ipynb```).
 
+Note that we don't release the prompts for labeling at this time. The prompts will be released once our paper is accepted.
+
 ### Metrics
 * Occurrence rate (OR)
 * Toxicity score (TS)
