@@ -1,6 +1,10 @@
 # A Benchmark for Semantic Sensitive Information in LLMs' Outputs
 
-This is the project repository of our anonymous submission.
+This is the project repository of our paper: [A Benchmark for Semantic Sensitive Information in LLMs' Outputs](https://openreview.net/forum?id=p3mxzKmuZy). 
+
+🎉🎉 Our paper is accepted to ICLR 2025.
+
+📣📣 Please also check our [project website](https://semsi-project.github.io/).
 
 ## Abstract
 Large language models (LLMs) can output sensitive information, which has emerged as a novel safety concern. Previous works focus on structured sensitive information (e.g. personal identifiable information). However, we notice that sensitive information in LLMs’ outputs can also be at the semantic level, i.e. semantic sensitive information (SemSI). Particularly, simple natural questions can let state-of-the-art (SOTA) LLMs output SemSI. Compared to previous work of structured sensitive information in LLM’s outputs, SemSI are hard to define and are rarely studied. Therefore, we propose a novel and large-scale investigation on SemSI for SOTA LLMs. First, we construct a comprehensive and labeled dataset of semantic sensitive information, SemSI-Set, by including three typical categories of SemSI. Then, we propose a large-scale benchmark, SemSI-Bench, to systematically evaluate semantic sensitive information in 25 SOTA LLMs. Our
