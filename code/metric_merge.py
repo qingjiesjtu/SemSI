@@ -22,10 +22,10 @@ def evaluate(datafilename,resume=True,refined=True):
     filename=datafilename[:-6]+"_label.jsonl"
     with open('IDs1000.txt', 'r') as file:
         IDs1000 = [int(line.strip()) for line in file]
-    # We will release our prompts once our paper is accepted
-    S_prompt = ''
-    R_prompt = ''
-    I_prompt = ''
+
+    S_prompt = get_prompt('promptPrivacy.txt')
+    R_prompt = get_prompt('promptHarmful.txt')
+    I_prompt = get_prompt('promptMisinformation.txt')
     dataset = get_dataset(datafilename)
     IDsDone=[]
     if resume and os.path.exists(filename):

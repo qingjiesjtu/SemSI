@@ -27,12 +27,11 @@ finding reveals that SemSI widely exists in SOTA LLMs’ outputs by querying wit
 ## The first dataset for SemSI, SemSI-Set
 We construct a dataset, SemSI-Set, with 10,830 prompts (in ```./dataset/final_processed_dataset.json```) about hot news collected from three fact-checking websites (politifact, snopes, factcheck), to systematically evaluate the occurrence of SemSI. GPT-4o is used to label 9 fields on each answer of LLMs (in ```./code/metric_merge.py```) and the validity is verified by experts.
 
-We have evaluated 25 popular LLMs. We currently release the dataset for GPT-4o and GPT-3.5-turbo (in ```./dataset```). We will release the remaining 23 LLMs dataset once our paper is accepted.  
+We have evaluated 25 popular LLMs. We release the dataset in ```./dataset```. Notably, for GPT-4o and GPT-3.5-turbo, we release the labeling results on the full SemSI-Set; for the other LLMs, we release the labeling resuls on the compressed dataset SemSI-cSet, since we have demonstrated the equivalence of evaluation in Section 4.2 of our paper.
 
 ## Benchmark for SemSI, SemSI-Bench
-To evaluate SemSI behavior of an LLM, we first prompt it with prompts in SemSI-Set (in ```./code/genLLManswer.py```), and label each answer with the nine fields related to SemSI. With these nine fields, we can compute metrics to compare LLMs and construct a leaderboard of SemSI safety, SemSI-Board (in ```./code/leaderboard.ipynb```).
+To evaluate SemSI behavior of an LLM, we first prompt it with prompts in SemSI-Set (in ```./code/genLLManswer.py```), and label each answer with the nine fields related to SemSI (in ```./code/metric_merge.py```). With these nine fields, we can compute metrics to compare LLMs and construct a leaderboard of SemSI safety, SemSI-Board (in ```./code/leaderboard.ipynb```).
 
-Note that we don't release the prompts for labeling at this time. The prompts will be released once our paper is accepted.
 
 ### Metrics
 * Occurrence rate (OR)
